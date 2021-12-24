@@ -1,0 +1,97 @@
+{% load i18n %}
+{% load static %}
+
+{% load tags %}
+
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="{{ request.alsinnariah.bio }}">
+	<meta name="author" content="">
+	<link rel="icon" href="{% static 'website/img/logo/alsinnariah.ico' %}">
+
+	<title> {{ request.alsinnariah }} </title>
+
+	<!-- Vendors Style-->
+	<link rel="stylesheet" href="{% static 'website/css/vendors_css.css' %}">	
+	<link rel="stylesheet" href="{% static 'website/css/style.css' %}">
+	<link rel="stylesheet" href="{% static 'website/css/skin_color.css' %}">
+	<link rel="stylesheet" href="{% static 'website/custom-style.css' %}">
+	<link rel="stylesheet" href="{% static 'website/css/jquery-ui.css' %}">
+	
+	<title>HTM</title>
+	
+	<!-- Style-->
+	<link rel="stylesheet" href="{% static 'website/custom-style.css' %}">
+
+	{% block header %}{% endblock %}
+	{% block tags %}{% endblock %}
+
+</head>
+
+<body class="layout-top-nav light-skin theme-primary rtl">
+
+	<!--  start wrapper content -->
+	<div class="container-full p-15 ">
+		{% block breadcrumbs %}{% endblock %}
+		{% messages_bar %}
+		{% block content %}{% endblock %}
+	</div>
+	
+	{% block content_wide %}{% endblock %}
+
+	{% website_footer %}
+
+	<!-- Vendor JS -->
+	<script src="{% static 'website/js/vendors.min.js' %}"></script>
+	<script src="{% static 'assets/vendor_components/OwlCarousel2/dist/owl.carousel.js' %}"></script>
+	<script src="{% static 'assets/icons/feather-icons/feather.min.js' %}"></script>	
+
+
+	<!-- EduAdmin App -->
+	{% comment %} <script src="{% static 'website/js/jquery-1.11.0.js' %}"></script> {% endcomment %}
+	<script src="{% static 'website/js/jquery.smartmenus.js' %}"></script>
+	<script src="{% static 'website/js/menus.js' %}"></script>
+	<script src="{% static 'website/js/template.js' %}"></script>
+	<script src="{% static 'website/js/jquery-ui.js' %}"></script>
+	<script src="{% static 'website/js/pages/chat-popup.js' %}"></script>
+	<script src="{% static 'website/js/pages/widget-blog.js' %}"></script>
+	
+	{% block footer %}{% endblock %}
+
+	<script type="text/javascript">	
+
+		setTimeout(function () {  
+			$('#alert').alert('close'); 
+		}, 3000);
+	
+		$(document).ready(function() {
+
+			$('.datepicker').datepicker({
+				dateFormat: 'yy-mm-dd'
+				})
+
+		} );		
+
+	</script>
+	<script>
+		function centerModal() {
+			$(this).css('display', 'block');
+				var $dialog = $(this).find(".modal-dialog");
+				var offset = ($(window).height() - $dialog.height()) / 2;
+				// Center modal vertically in window
+				$dialog.css("margin-top", offset);
+				}
+
+			$('.modal').on('show.bs.modal', centerModal);
+			$(window).on("resize", function () {
+			$('.modal:visible').each(centerModal);
+		});
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+{% extends "layouts/website-header.html" %}
+{% load i18n %}
+{% load static %}
+{% load tags %}
+{% block breadcrumbs %}
+<section class="py-md-10">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex align-items-center">
+                <div class="me-auto">
+                    <div class="d-inline-block align-items-center">
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{% url 'Website:home' %}"><i class="mdi mdi-home-outline"></i> {% trans 'website' %}</a></li>
+                                <li class="breadcrumb-item">{% trans 'home' %}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block page_name %}{% trans 'website' %}{% endblock %}
+
+{% block content %}
+    Hi from Hassan The Mechanic Core ...
+{% endblock %}
