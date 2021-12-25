@@ -1,0 +1,95 @@
+# creating
+django-admin startproject myProject
+python manage.py startapp myApp
+
+
+# Run
+python manage.py runserver
+
+# configuration
+
+# Database
+python3 manage.py makemigrations
+python3 manage.py migrate
+python manage.py makemigrations --dry-run --verbosity 3
+find . -path "*/migrations/*.py" -not -name "__init__.py" ! -path '*/env/*' -delete
+find . -path "*/migrations/*.pyc" ! -path '*/env/*' -delete
+python manage.py sqlmigrate hrmgmt 0002
+
+# Create
+python3 manage.py createsuperuser
+
+# Translation
+python3 manage.py makemessages -a
+python3 manage.py compilemessages
+
+# Tests
+python3 -m unittest -v test.py 
+python -m unittest discover -s tests/integration
+
+# environment
+sudo apt install python3.8-venv
+python3 -m venv env
+
+# requirments
+pip freeze > requirements.txt
+pip install -r requirements.txt
+
+# resful
+pip install djangorestframework
+
+# api 
+curl -X POST -d '{"username": "bakrialtaif","password": "123456"}' -H 'Content-Type: application/json' http://127.0.0.1:8000/api/auth/token/login/
+http POST http://localhost:8000/api/auth/token/login/ username='bakrialtaif' password="123456"
+http --form POST http://127.0.0.1:8000/snippets/ code="print(123)" title="my title" language="php"
+http -a bakrialtaif:123456 POST http://127.0.0.1:8000/snippets/ code="print(123)"
+
+# Digital Ocean Preparation
+
+    ssh-keygen -t rsa
+    sudo apt-get update
+    sudo apt-get install build-essential libssl-dev gcc libpq-dev libffi-dev python-dev python3-pip binutils libproj-dev gdal-bin python3-wheel -y
+    pip3 install wheel
+    pip3 install -r requirements.txt
+
+[*] Add User:
+    [1] adduser [UserName]
+    [2] usermod -aG sudo [UserName]
+    [3] su - [UserName] 
+
+# Gunicorn
+    https://www.digitalocean.com/community/tutorials/how-to-set-up-django-with-postgres-nginx-and-gunicorn-on-ubuntu-16-04
+
+    [1] sudo vim /etc/systemd/system/gunicorn.service
+    [2] 
+
+    [Unit]
+    Description=gunicorn daemon
+    After=network.target
+
+    [Service]
+    User=david
+    Group=www-data
+    WorkingDirectory=/home/david/mywebsite
+    ExecStart=/home/david/mywebsite/venv/bin/gunicorn --workers 3 --bind unix:/home/david/mywebsite/mywebsite.sock mywebsite.wsgi:application
+
+    [Install]
+    WantedBy=multi-user.target
+
+    [3] sudo systemctl start gunicorn & sudo systemctl enable gunicorn
+
+sudo tail -F /var/log/nginx/error.log
+sudo service gunicorn restart
+
+# manage.py remove_stale_contenttypes
+
+sudo systemctl daemon-reload
+sudo systemctl restart gunicorn.service 
+sudo systemctl reload nginx
+sudo systemctl restart nginx.service
+sudo ln -s /etc/nginx/sites-available/project_name_production /etc/nginx/sites-enabled
+
+# restart services
+sudo systemctl daemon-reload
+sudo systemctl restart gunicorn
+sudo systemctl restart nginx
